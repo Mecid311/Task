@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TaskWebUI.Models.Entity.About>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Text)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.Title.Length > 100)
+                                        {
+                                            @Html.Raw($"{item.Title.Substring(0, 100)}...")
+
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(item.Title)
+                                        }
+                                        
+                                    </td>
+                                    <td>
+                                        @if (item.Text.Length > 100)
+                                        {
+                                            @Html.Raw($"{item.Text.Substring(0, 100)}...")
+
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(item.Text)
+                                        }
+                                    </td>
+                                    <td class="operate-cell">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                            <i class="fa fa-pencil"></i>
+                                        </a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fa fa-location-arrow"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

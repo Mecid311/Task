@@ -1,0 +1,124 @@
+﻿@model TaskWebUI.Models.Entity.News
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="">
+
+                    <h4>News</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Create" method="post" enctype="multipart/form-data" id="movieForm" class="adminform">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <textarea asp-for="Title" class="form-control" ></textarea>
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Text" class="control-label"></label>
+                                    <textarea asp-for="Text" rows="7" class="form-control"></textarea>
+                                    <span asp-validation-for="Text" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label id="movieFile-viewer" for="movieFile"></label>
+                                    <input type="file" name="movieImage"
+                                           accept="image/x-png,image/gif,image/jpeg" id="movieFile" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CategoryId" class="control-label"></label>
+                                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Index" class="btn btn-default adminform" style="margin-bottom:30px">Back to List</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Text'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#Title'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        $('#movieFile').change(function (e) {
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                $('#movieFile-viewer').css({
+                    'background-image': `url(${reader.result})`
+                });
+
+                if ($(that).find('input:checked').length == 0)
+                    $(label).trigger('click');
+            }, false);
+
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+
+        $('#movieForm').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+
+    </script>
+}
+
+
+
+
+@section css{
+
+    <style>
+
+        .ck-editor__editable {
+            min-height: 300px !important;
+        }
+
+        #movieFile {
+            display: none;
+        }
+
+
+
+        #movieFile-viewer {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+}
+

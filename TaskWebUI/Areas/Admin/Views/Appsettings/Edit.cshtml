@@ -1,0 +1,134 @@
+﻿@model TaskWebUI.Models.Entity.Appsetting
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="">
+
+                    <h4>Appsetting</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Edit" method="post" class="adminform" enctype="multipart/form-data" id="movieForm">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="form-group">
+                                    <label asp-for="WebTitle" class="control-label"></label>
+                                    <input asp-for="WebTitle" class="form-control" />
+                                    <span asp-validation-for="WebTitle" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label id="movieFile-viewer" for="movieFile" data-imgurl="/uploads/@Model.WebLogo">
+                                        <input type="hidden" asp-for="WebLogoPath" value="@Model.WebLogo" />
+                                        <span>&times;</span>
+                                    </label>
+                                    <input type="file" name="movieImage"
+                                           accept="image/x-png,image/gif,image/jpeg" id="movieFile" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="WebFooter" class="control-label"></label>
+                                    <input asp-for="WebFooter" class="form-control" />
+                                    <span asp-validation-for="WebFooter" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-default" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <a asp-action="Index" class="btn btn-default adminform" style="margin-bottom:30px">Back to List</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+
+    <script>
+
+
+        $('#movieFile').change(function (e) {
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                $('#movieFile-viewer').css({
+                    'background-image': `url(${reader.result})`
+                });
+
+                if ($(that).find('input:checked').length == 0)
+                    $(label).trigger('click');
+            }, false);
+
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+
+        $('#movieFile-viewer > span').on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(e.currentTarget).closest('label').css('background-image', 'none');
+            $(e.currentTarget).closest('label').find('input').val('');
+
+            $('#movieFile').val = ('');
+        });
+
+        let url = $('#movieFile-viewer')
+            .click(function () {
+                $('#movieFile-viewer').css('background-image', 'none');
+            })
+            .data('imgurl');
+        if (url != undefined) {
+            $('#movieFile-viewer').css('background-image', `url('${url}')`);
+        }
+
+        $('#movieForm').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+
+    </script>
+}
+
+
+
+
+@section css{
+
+    <style>
+
+        #movieFile {
+            display: none;
+        }
+
+        #movieFile-viewer {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+            #movieFile-viewer span {
+                padding: 10px;
+                display: inline-block;
+            }
+    </style>
+}

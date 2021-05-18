@@ -1,0 +1,114 @@
+/**
+ * Owl Carousel v2.3.4
+ * Copyright 2013-2018 David Deutsch
+ * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
+ */
+.owl-theme .owl-dots
+ {
+    text-align: right;
+    position: absolute;
+    top:50%;
+    right: 50px;
+    transform: translateY(-50%);
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+
+}
+ 
+.owl-theme .owl-nav {
+    margin-top: 10px;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+    color: #FFF;
+    font-size: 14px;
+    margin: 5px;
+    padding: 4px 7px;
+    background: #D6D6D6;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 3px
+}
+
+.owl-carousel:hover .owl-prev {
+    background: #212121 !important;
+    color: #FFF;
+    text-decoration: none;
+    opacity: 1!important;
+    transition: 0.5s all;
+} 
+.owl-carousel:hover .owl-next {
+    background: #212121 !important;
+    color: #FFF;
+    text-decoration: none;
+    opacity: 1!important;
+    transition: 0.5s all;
+} 
+
+
+.owl-theme .owl-dots .owl-dot {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    width: 5px;
+    height: 15px;
+    margin: 5px 7px;
+    background: #fff;
+    display: block;
+    -webkit-backface-visibility: visible;
+    transition: opacity .2s ease;
+    outline: none;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: red;
+}
+
+ .owl-prev{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -5%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    font-size: 1.5rem !important;
+    outline: none;
+    background: #212121 !important;
+    color: #fff !important;
+    opacity: 0!important;
+    transition: 0.2s all;
+}
+.owl-next{
+    position: absolute;
+    top: 50%;
+    right: -5%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    font-size: 1.5rem !important;
+    outline: none;
+    background: #212121 !important;
+    color: #fff !important;
+    opacity: 0 !important;
+    transition: 0.2s all;
+} 
+body{
+    overflow-x:hidden;
+}
+body .owl-nav .owl-prev:hover{
+    background: red!important;
+    opacity: 1 !important;
+    transition: 0.2s all;
+}
+body .owl-nav .owl-next:hover{
+    background: red!important;
+    opacity: 1 !important;
+    transition: 0.2s all;
+}
+
+/* .owl */

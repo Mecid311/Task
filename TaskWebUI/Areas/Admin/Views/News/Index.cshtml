@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TaskWebUI.Models.Entity.News>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Text)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Image)
+                                </th>
+                               
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Category)
+                                </th>
+                                <th class="operate-cell">
+                                    <a asp-action="Create" class=" btn btn-sm btn-success"><i class="fa fa-plus"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.Title.Length>100)
+                                        {
+                                            @Html.Raw($"{item.Title.Substring(0,100)}...")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(item.Title)
+                                        }
+                                    </td>
+                                    <td>
+                                       @if (item.Text.Length>100)
+                                       {
+                                           @Html.Raw($"{item.Text.Substring(0,100)}...")
+                                       }
+                                       else
+                                       {
+                                           @Html.Raw(item.Text)
+                                       }
+                                    </td>
+                                    <td>
+                                        <img class="img-size" src="~/uploads/@item.Image" />
+                                    </td>
+                                  
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category.Name)
+                                    </td>
+                                    <td class="operate-cell">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                            <i class="fa fa-pencil"></i>
+                                        </a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fa fa-location-arrow"></i>
+                                        </a> |
+                                        <a onclick="productRemove(@item.Id)" class=" btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+    <script>
+        function productRemove(_id) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        $.ajax({
+                            url: `@Url.Action("Delete")`,
+                            type: 'post',
+                            data: { id: _id },
+                            success: function (response) {
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                });
+
+                                window.location.reload();
+                            },
+                            error: function (response) {
+                                alert('xeta oldu');
+                            }
+                        });
+
+
+
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        }
+    </script>
+}
